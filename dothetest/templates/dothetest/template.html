@@ -1,0 +1,50 @@
+<head>
+</head>
+
+<body>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form }}
+		<br>
+		<input type="submit">
+	</form>
+
+	<script>
+		//https://stackoverflow.com/questions/43481931/how-to-upload-an-image-through-copy-paste-using-django-modelform#43502536
+
+		//const target =  document.querySelector('input#id_imagen_container'); //(esto agregue con los muchachis en el meetup)
+		const target =  document.querySelector('*'); //funciona?
+		target.addEventListener('paste', pasteHandler);
+
+		//document.getElementById("id_imagen_container").addEventListener("paste", pasteHandler); // es lo mismo...
+
+		console.log(target);
+
+		function pasteHandler(e) {
+			console.log('ok! (pasteHandler function was called)');
+			console.log(e.clipboardData);
+			if (e.clipboardData) {
+				// Get the items from the clipboard
+				var items = e.clipboardData.items;
+				if (items) {
+					 // Loop through all items, looking for any kind of image
+					 for (var i = 0; i < items.length; i++) {
+							if (items[i].type.indexOf("image") !== -1) {
+								 // We need to represent the image as a file,
+								 var blob = items[i].getAsFile();
+								 var URLObj = window.URL || window.webkitURL;
+								 var source = URLObj.createObjectURL(blob);
+								 var reader = new FileReader();
+								 reader.onload = function(e) {
+									 //document.getElementById("summaryImage").value= reader.result;
+									 document.getElementById("id_imagen_container").value=reader.result;
+								 }
+								 reader.readAsDataURL(blob);
+							}
+						}
+					}
+			 }
+		}
+	</script>
+
+</body>
