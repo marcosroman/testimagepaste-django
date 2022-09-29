@@ -5,8 +5,9 @@ from . import forms
 def vista(request):
     if request.method=="POST":
         form=forms.Formulario(request.POST, request.FILES)
+        form.fields['imagen'].required = False
         if form.is_valid():
-            form.save().save()
+            form.save()
     else:
         form=forms.Formulario()
 
