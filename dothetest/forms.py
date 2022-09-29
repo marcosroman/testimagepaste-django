@@ -2,6 +2,9 @@ from django import forms#.ModelForm, forms.CharField, forms.HiddenInput
 from django.forms import widgets
 from . import models
 from django.utils.safestring import mark_safe
+from django.utils.text import slugify
+from django.core.files.base import ContentFile
+import base64
 
 # (1) https://stackoverflow.com/questions/43481931/how-to-upload-an-image-through-copy-paste-using-django-modelform#43502536
 
@@ -24,16 +27,15 @@ class Formulario(forms.ModelForm):
         widgets = {
             'imagen': PictureWidget(),
         }
+
     def save(self, commit=True):
         # check image_container data
-        self.instance.image.delete(False)
+        self.instance.imagen.delete(False)
         imgdata = self.cleaned_data['imagen_container'].split(',')
-        print('imgdata is '+str(imgdata))
         try:
             ftype = imgdata[0].split(';')[0].split('/')[1]
-            fname = slugify(self.instance.title)
-            self.instance.image.save('%s.%s' % (fname, ftype), ContentFile(imgdata[1].decode("base64")))
+            fname = slugify(self.instance.texto)
+            self.instance.imagen.save('%s.%s' % (fname, ftype), ContentFile(base64.decodebytes(bytes(imgdata[1], 'utf-8'))))
         except:
-            print('passing!')
             pass
-        return super(MyForm, self).save(commit=commit)
+        return super(Formulario, self).save(commit=commit)
