@@ -11,13 +11,11 @@
 
 	<script>
 		//https://stackoverflow.com/questions/43481931/how-to-upload-an-image-through-copy-paste-using-django-modelform#43502536
-
 		//const target =  document.querySelector('input#id_imagen_container'); //(esto agregue con los muchachis en el meetup)
 		const target =  document.querySelector('*'); //funciona?
 		target.addEventListener('paste', pasteHandler);
 
 		//document.getElementById("id_imagen_container").addEventListener("paste", pasteHandler); // es lo mismo...
-
 		console.log(target);
 
 		function pasteHandler(e) {
