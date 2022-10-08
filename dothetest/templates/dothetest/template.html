@@ -21,8 +21,8 @@
 		console.log(target);
 
 		function pasteHandler(e) {
-			console.log('ok! (pasteHandler function was called)');
-			console.log(e.clipboardData);
+			//console.log('ok! (pasteHandler function was called)');
+			//console.log(e.clipboardData);
 			if (e.clipboardData) {
 				// Get the items from the clipboard
 				var items = e.clipboardData.items;
@@ -38,6 +38,7 @@
 								 reader.onload = function(e) {
 									 //document.getElementById("summaryImage").value= reader.result;
 									 document.getElementById("id_imagen_container").value=reader.result;
+									 document.getElementById("id_imagen").src=reader.result;
 								 }
 								 reader.readAsDataURL(blob);
 							}
@@ -46,5 +47,4 @@
 			 }
 		}
 	</script>
-
 </body>
